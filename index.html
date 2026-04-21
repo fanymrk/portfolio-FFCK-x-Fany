@@ -1,900 +1,342 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — Alternance FFCK</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — FFCK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet"/>
   <style>
-    /* ============================================================
-       RESET & VARIABLES
-    ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:        #0a0a0a;
-      --surface:   #141414;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #f0ede8;
-      --muted:     rgba(240,237,232,0.40);
-      --soft:      rgba(240,237,232,0.70);
-      --accent:    #C8E63C;
-      --accent-bg: rgba(200,230,60,0.10);
-      --accent-bd: rgba(200,230,60,0.25);
-      --display:   'Bebas Neue', sans-serif;
-      --body:      'DM Sans', sans-serif;
-      --radius:    10px;
-    }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--body);
-      font-size: 16px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    a { text-decoration: none; color: inherit; }
+    body { background: #141414; color: #e5e5e5; font-family: 'Barlow', sans-serif; font-weight: 400; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
-    img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-    /* ============================================================
-       NAV
-    ============================================================ */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.1rem 3rem;
-      background: rgba(10,10,10,0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 0.5px solid var(--border);
-    }
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 68px; display: flex; align-items: center; padding: 0 4%; gap: 2.5rem; background: linear-gradient(to bottom, rgba(20,20,20,.95) 0%, transparent 100%); transition: background .3s; }
+    .nav.scrolled { background: rgba(20,20,20,.97); }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: .12em; color: #3B8BFF; flex-shrink: 0; }
+    .nav-links { display: flex; gap: 1.6rem; }
+    .nav-links a { font-size: 13px; color: rgba(229,229,229,.65); transition: color .15s; }
+    .nav-links a:hover { color: #e5e5e5; }
+    .burger { display: none; margin-left: auto; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .burger span { display: block; width: 22px; height: 1.5px; background: #e5e5e5; }
+    .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 190; background: rgba(20,20,20,.98); padding: 1.2rem 4%; flex-direction: column; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 15px; color: rgba(229,229,229,.7); padding: .8rem 0; border-bottom: 1px solid rgba(255,255,255,.08); transition: color .15s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: #e5e5e5; }
 
-    .nav-logo {
-      font-family: var(--display);
-      font-size: 19px;
-      letter-spacing: 0.10em;
-      color: var(--text);
-    }
-    .nav-logo span { color: var(--accent); }
+    /* HERO */
+    #hero { position: relative; height: 100vh; min-height: 560px; display: flex; align-items: flex-end; padding: 0 4% 8%; overflow: hidden; background: #0d0d0d; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(to bottom right, #0a1628 0%, #1a0a2e 50%, #0d0d0d 100%); }
+    .hero-vignette { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(20,20,20,0) 60%), linear-gradient(to right, rgba(20,20,20,.8) 0%, transparent 60%); }
+    .hero-content { position: relative; z-index: 2; max-width: 600px; }
+    .hero-tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #3B8BFF; margin-bottom: 1rem; }
+    .hero-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 9vw, 110px); letter-spacing: .02em; line-height: .95; color: #fff; margin-bottom: 1.2rem; }
+    .hero-meta { font-size: 16px; font-weight: 300; color: rgba(229,229,229,.75); line-height: 1.6; margin-bottom: 2rem; }
+    .hero-meta strong { color: #e5e5e5; font-weight: 600; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; padding: 10px 24px; border-radius: 4px; cursor: pointer; transition: opacity .2s; }
+    .btn:hover { opacity: .85; }
+    .btn-white { background: #fff; color: #141414; }
+    .btn-dim { background: rgba(109,109,110,.7); color: #fff; }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-    .nav-links {
-      display: flex;
-      gap: 2.2rem;
-    }
-    .nav-links a {
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      transition: color .2s;
-    }
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--accent); }
+    /* ROW */
+    .row-section { padding: 3rem 4%; }
+    .row-section + .row-section { padding-top: 0; }
+    .row-label { font-size: 18px; font-weight: 600; color: #e5e5e5; margin-bottom: 1rem; letter-spacing: -.01em; }
+    .row-label span { color: #3B8BFF; }
+    .cards-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; -ms-overflow-style: none; }
+    .cards-row::-webkit-scrollbar { display: none; }
 
-    /* ============================================================
-       HERO
-    ============================================================ */
-    #hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 280px;
-      grid-template-rows: auto auto;
-      gap: 3rem 3rem;
-      align-items: center;
-      padding: 9rem 3rem 0;
-      position: relative;
-      overflow: hidden;
-    }
+    /* MISSION CARD */
+    .m-card { flex-shrink: 0; width: 220px; background: #2a2a2a; border-radius: 6px; overflow: hidden; transition: transform .2s, box-shadow .2s; cursor: pointer; position: relative; }
+    .m-card:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(0,0,0,.6); z-index: 10; }
+    .m-card-thumb { width: 100%; height: 130px; background: #1e2a3a; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .m-card-thumb svg { width: 36px; height: 36px; fill: #3B8BFF; opacity: .7; }
+    .m-card-thumb::after { content: '▶  Voir'; position: absolute; inset: 0; background: rgba(59,139,255,.2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #fff; opacity: 0; transition: opacity .2s; }
+    .m-card:hover .m-card-thumb::after { opacity: 1; }
+    .m-card-body { padding: 10px 12px 14px; }
+    .m-card-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e5e5e5; }
+    .m-card-desc { font-size: 12px; font-weight: 300; color: rgba(229,229,229,.55); line-height: 1.5; margin-bottom: 8px; }
+    .m-card-tools { display: flex; flex-wrap: wrap; gap: 4px; }
+    .m-tag { font-size: 10px; padding: 2px 8px; border-radius: 3px; background: rgba(59,139,255,.15); color: #3B8BFF; font-weight: 500; }
 
-    .water {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .water span {
-      position: absolute;
-      left: -5%; right: -5%;
-      height: 0.5px;
-      background: var(--accent);
-      opacity: 0.08;
-      animation: wave 5s ease-in-out infinite;
-    }
-    .water span:nth-child(1) { top: 18%; animation-delay: 0s; }
-    .water span:nth-child(2) { top: 32%; animation-delay: .8s; opacity: .05; }
-    .water span:nth-child(3) { top: 50%; animation-delay: 1.6s; }
-    .water span:nth-child(4) { top: 67%; animation-delay: 2.4s; opacity: .05; }
-    .water span:nth-child(5) { top: 82%; animation-delay: 3.2s; }
+    /* MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 2rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #1f1f1f; border-radius: 12px; width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #3B8BFF #1f1f1f; animation: modalIn .25s ease both; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(16px); } to { opacity: 1; transform: none; } }
+    .modal-header { position: relative; height: 220px; background: #1e2a3a; border-radius: 12px 12px 0 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .modal-header svg { width: 56px; height: 56px; fill: #3B8BFF; opacity: .35; }
+    .modal-header-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(31,31,31,1) 0%, transparent 60%); }
+    .modal-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; background: rgba(0,0,0,.6); border: none; border-radius: 50%; color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background .2s; }
+    .modal-close:hover { background: rgba(59,139,255,.7); }
+    .modal-body { padding: 1.5rem 2rem 2rem; }
+    .modal-badge { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #3B8BFF; margin-bottom: .5rem; }
+    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: .02em; color: #fff; margin-bottom: .8rem; }
+    .modal-desc { font-size: 15px; font-weight: 300; color: rgba(229,229,229,.65); line-height: 1.75; margin-bottom: 1.5rem; }
+    .modal-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.8rem; }
+    .modal-tool { font-size: 11px; padding: 4px 12px; border-radius: 3px; background: rgba(59,139,255,.12); color: #3B8BFF; border: 1px solid rgba(59,139,255,.25); }
+    .modal-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .modal-btn-main { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; background: #3B8BFF; color: #fff; padding: 10px 20px; border-radius: 4px; transition: background .2s; }
+    .modal-btn-main:hover { background: #0058b0; }
+    .modal-btn-main svg { width: 15px; height: 15px; fill: #fff; }
+    .modal-btn-ghost { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; border: 1.5px solid rgba(229,229,229,.3); color: #e5e5e5; padding: 10px 20px; border-radius: 4px; transition: border-color .2s; }
+    .modal-btn-ghost:hover { border-color: #e5e5e5; }
 
-    @keyframes wave {
-      0%,100% { transform: scaleX(1) skewY(0deg); }
-      50%      { transform: scaleX(1.03) skewY(.25deg); opacity: .18; }
-    }
+    /* FEATURED */
+    .featured-wrap { padding: 0 4% 3rem; }
+    .feat-card { position: relative; border-radius: 8px; overflow: hidden; height: clamp(280px, 40vw, 480px); background: #1e2a3a; display: flex; align-items: flex-end; }
+    .feat-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,20,20,.95) 0%, rgba(20,20,20,.2) 60%, transparent 100%); }
+    .feat-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; color: rgba(229,229,229,.2); font-size: 14px; }
+    .feat-placeholder svg { width: 48px; height: 48px; fill: rgba(59,139,255,.25); }
+    .feat-content { position: relative; z-index: 2; padding: 2rem 2.5rem; width: 100%; }
+    .feat-badge { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #3B8BFF; margin-bottom: .5rem; }
+    .feat-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 4vw, 52px); letter-spacing: .03em; color: #fff; margin-bottom: .6rem; }
+    .feat-desc { font-size: 14px; font-weight: 300; color: rgba(229,229,229,.65); max-width: 480px; line-height: 1.6; margin-bottom: 1.2rem; }
+    .feat-steps { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    .feat-step { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(229,229,229,.5); }
+    .step-n { width: 20px; height: 20px; border-radius: 50%; background: #3B8BFF; color: #fff; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
 
-    .bg-word {
-      position: absolute;
-      bottom: 60px; right: -20px;
-      font-family: var(--display);
-      font-size: clamp(100px, 18vw, 220px);
-      color: rgba(255,255,255,0.022);
-      letter-spacing: -.02em;
-      line-height: 1;
-      user-select: none;
-      pointer-events: none;
-    }
+    /* PROJ CARDS */
+    .p-card { flex-shrink: 0; width: 260px; background: #2a2a2a; border-radius: 6px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+    .p-card:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(0,0,0,.6); }
+    .p-card-img { width: 100%; height: 150px; background: #1e1e1e; display: flex; align-items: center; justify-content: center; color: rgba(229,229,229,.2); font-size: 13px; overflow: hidden; }
+    .p-card-body { padding: 10px 14px 14px; }
+    .p-card-cat { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #3B8BFF; margin-bottom: 4px; }
+    .p-card-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e5e5e5; }
+    .p-card-desc { font-size: 12px; font-weight: 300; color: rgba(229,229,229,.5); line-height: 1.5; }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      animation: fadeUp .9s ease both;
-      align-self: center;
-    }
+    /* CONTEXTE */
+    .ctx-wrap { padding: 0 4% 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .ctx-text { font-size: 16px; font-weight: 300; color: rgba(229,229,229,.7); line-height: 1.85; }
+    .ctx-text strong { color: #e5e5e5; font-weight: 600; }
+    .ctx-stats { display: flex; flex-direction: column; gap: 1.5rem; }
+    .ctx-stat { border-left: 2px solid #3B8BFF; padding-left: 1.2rem; }
+    .ctx-n { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: #3B8BFF; line-height: 1; letter-spacing: .02em; }
+    .ctx-l { font-size: 12px; font-weight: 400; color: rgba(229,229,229,.45); text-transform: uppercase; letter-spacing: .08em; }
 
-    .eyebrow {
-      font-size: 11px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.1rem;
-    }
+    /* BILAN */
+    .bilan-wrap { padding: 0 4% 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .bilan-card { background: #1f1f1f; border-radius: 8px; padding: 2rem; border: 1px solid rgba(255,255,255,.06); }
+    .bilan-type { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #3B8BFF; margin-bottom: 1.2rem; }
+    .bilan-list { display: flex; flex-direction: column; gap: .7rem; }
+    .bilan-list li { font-size: 14px; font-weight: 300; color: rgba(229,229,229,.7); padding-left: 1rem; position: relative; line-height: 1.55; }
+    .bilan-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; border-radius: 50%; background: #3B8BFF; }
+    .persp-wrap { padding: 0 4% 5rem; }
+    .persp-inner { border-top: 1px solid rgba(255,255,255,.08); padding-top: 2.5rem; }
+    .persp-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(229,229,229,.35); margin-bottom: .8rem; }
+    .persp-text { font-size: clamp(18px, 2.5vw, 24px); font-weight: 300; font-style: italic; color: rgba(229,229,229,.6); max-width: 680px; line-height: 1.65; }
 
-    .hero-name {
-      font-family: var(--display);
-      font-size: clamp(64px, 8.5vw, 108px);
-      line-height: .93;
-      letter-spacing: .01em;
-      margin-bottom: 1.4rem;
-    }
-    .hero-name .dim { color: var(--muted); }
+    footer { padding: 2rem 4%; border-top: 1px solid rgba(255,255,255,.06); font-size: 13px; color: rgba(229,229,229,.3); }
 
-    .hero-desc {
-      font-size: 15px;
-      font-weight: 300;
-      color: var(--soft);
-      line-height: 1.85;
-      max-width: 400px;
-      margin-bottom: 1.6rem;
-    }
-    .hero-desc strong { color: var(--text); font-weight: 400; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.in { opacity: 1; transform: none; }
 
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 2rem;
-    }
-    .pill {
-      font-size: 11px;
-      padding: 5px 14px;
-      border-radius: 100px;
-      border: 0.5px solid var(--border);
-      color: var(--muted);
-      letter-spacing: .04em;
-    }
-
-    .cta {
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: .05em;
-      color: var(--bg);
-      background: var(--accent);
-      padding: 12px 28px;
-      border-radius: 100px;
-      transition: opacity .2s, transform .2s;
-    }
-    .cta:hover { opacity: .88; transform: translateY(-2px); }
-
-    .photo-frame {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 360px;
-      border-radius: var(--radius);
-      border: 0.5px solid rgba(255,255,255,0.09);
-      background: rgba(255,255,255,0.03);
-      overflow: hidden;
-      animation: fadeUp 1.1s ease both;
-      align-self: center;
-    }
-    .photo-frame .placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .photo-frame .placeholder svg {
-      width: 36px; height: 36px;
-      fill: rgba(200,230,60,.35);
-    }
-
-    .stats-strip {
-      grid-column: 1 / -1;
-      display: flex;
-      border-top: 0.5px solid var(--border);
-      margin: 0 -3rem;
-      padding: 0 3rem;
-      align-self: end;
-    }
-    .stat-item {
-      flex: 1;
-      padding: 1.2rem 0;
-      border-right: 0.5px solid var(--border);
-      text-align: center;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      display: block;
-      font-family: var(--display);
-      font-size: 36px;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-lbl {
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ============================================================
-       SECTIONS — base
-    ============================================================ */
-    section { padding: 7rem 3rem; }
-    section:nth-of-type(even) { background: var(--surface); }
-
-    .inner { max-width: 1020px; margin: 0 auto; }
-
-    .s-label {
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .9rem;
-    }
-
-    .s-title {
-      font-family: var(--display);
-      font-size: clamp(38px, 5vw, 62px);
-      letter-spacing: .02em;
-      line-height: 1;
-      margin-bottom: 3rem;
-    }
-
-    /* ============================================================
-       CONTEXTE
-    ============================================================ */
-    .context-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 2.5rem;
-      align-items: start;
-    }
-
-    .context-text {
-      font-size: 15px;
-      color: var(--soft);
-      line-height: 1.9;
-    }
-
-    .context-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 1.4rem;
-    }
-
-    .c-stat { border-left: 2px solid var(--accent); padding-left: 1.1rem; }
-    .c-stat-num {
-      font-family: var(--display);
-      font-size: 40px;
-      color: var(--accent);
-      line-height: 1;
-      display: block;
-    }
-    .c-stat-lbl {
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .role-block {
-      border: 0.5px solid var(--accent-bd);
-      border-radius: var(--radius);
-      padding: 1.5rem 2rem;
-      background: var(--accent-bg);
-    }
-    .role-label {
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .5rem;
-    }
-    .role-text {
-      font-size: 14px;
-      color: var(--soft);
-      line-height: 1.85;
-    }
-
-    /* ============================================================
-       MISSIONS
-    ============================================================ */
-    .missions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .mission-card {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color .25s, transform .25s;
-    }
-    .mission-card:hover {
-      border-color: var(--accent-bd);
-      transform: translateY(-4px);
-    }
-
-    .m-icon {
-      width: 34px; height: 34px;
-      border-radius: 8px;
-      background: var(--accent-bg);
-      border: 0.5px solid var(--accent-bd);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .m-icon svg { width: 16px; height: 16px; fill: var(--accent); }
-
-    .m-name { font-size: 16px; font-weight: 500; margin-bottom: .4rem; }
-    .m-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.75;
-      margin-bottom: 1rem;
-    }
-    .tools { display: flex; flex-wrap: wrap; gap: 5px; }
-    .tool {
-      font-size: 10px;
-      padding: 3px 10px;
-      border-radius: 100px;
-      background: var(--accent-bg);
-      color: var(--accent);
-      border: 0.5px solid var(--accent-bd);
-      letter-spacing: .04em;
-    }
-
-    /* ============================================================
-       PROJETS
-    ============================================================ */
-    .project-featured {
-      border: 0.5px solid var(--accent-bd);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      background: var(--accent-bg);
-      margin-bottom: 2.5rem;
-    }
-    .pf-badge {
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: .6rem;
-    }
-    .pf-title {
-      font-family: var(--display);
-      font-size: 46px;
-      letter-spacing: .02em;
-      margin-bottom: 1rem;
-    }
-    .pf-desc {
-      font-size: 14px;
-      color: var(--soft);
-      line-height: 1.85;
-      max-width: 600px;
-      margin-bottom: 2rem;
-    }
-    .pf-media {
-      width: 100%;
-      height: 280px;
-      background: rgba(255,255,255,0.03);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 2rem;
-      overflow: hidden;
-    }
-    .process {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .p-step {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--soft);
-    }
-    .p-num {
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: var(--bg);
-      font-size: 12px;
-      font-weight: 500;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .p-arrow { color: var(--muted); font-size: 16px; }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .project-card {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color .25s, transform .25s;
-    }
-    .project-card:hover {
-      border-color: var(--accent-bd);
-      transform: translateY(-4px);
-    }
-    .pc-img {
-      width: 100%;
-      height: 170px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 0.5px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted);
-      font-size: 13px;
-      overflow: hidden;
-    }
-    .pc-body { padding: 1rem 1.2rem; }
-    .pc-cat {
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-    .pc-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-    .pc-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
-
-    /* ============================================================
-       BILAN
-    ============================================================ */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 2rem;
-    }
-    .skill-block {
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem 1.8rem;
-    }
-    .sk-type {
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .sk-list { display: flex; flex-direction: column; gap: .6rem; }
-    .sk-list li {
-      font-size: 14px;
-      color: var(--soft);
-      padding-left: 1.2rem;
-      position: relative;
-      line-height: 1.55;
-    }
-    .sk-list li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 12px;
-    }
-
-    .outlook { border-top: 0.5px solid var(--border); padding-top: 2rem; }
-    .outlook-label {
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: .7rem;
-    }
-    .outlook-text {
-      font-size: 15px;
-      color: var(--soft);
-      line-height: 1.9;
-      max-width: 660px;
-      font-style: italic;
-    }
-
-    /* ============================================================
-       FOOTER
-    ============================================================ */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 0.5px solid var(--border);
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: .06em;
-    }
-
-    /* ============================================================
-       ANIMATIONS
-    ============================================================ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(26px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+    @media (max-width: 800px) {
       .nav-links { display: none; }
-      #hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 0; gap: 2rem; }
-      .photo-frame { height: 260px; }
-      .stats-strip { margin: 0 -1.5rem; padding: 0 1.5rem; flex-wrap: wrap; }
-      .stat-item { min-width: 50%; }
-      section { padding: 5rem 1.5rem; }
-      .context-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .process { flex-direction: column; align-items: flex-start; }
-      .p-arrow { transform: rotate(90deg); }
+      .burger { display: flex; }
+      .hero-name { font-size: clamp(48px, 12vw, 80px); }
+      .ctx-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 0 4% 3rem; }
+      .bilan-wrap { grid-template-columns: 1fr; }
+      .m-card { width: 180px; }
+      .p-card { width: 220px; }
+      .modal { max-width: 100%; }
+    }
+    @media (max-width: 500px) {
+      .nav, #hero, .row-section, .featured-wrap, .ctx-wrap, .bilan-wrap, .persp-wrap { padding-left: 5%; padding-right: 5%; }
+      #hero { padding-top: 0; padding-bottom: 12%; }
+      .feat-content { padding: 1.5rem; }
+      .modal-body { padding: 1.2rem 1.4rem 1.8rem; }
+      .modal-overlay { padding: .8rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <span class="nav-logo">FFCK <span>·</span> Portfolio</span>
+  <nav class="nav" id="nav">
+    <span class="nav-logo">FFCK</span>
     <ul class="nav-links">
-      <li><a href="#hero">À propos</a></li>
+      <li><a href="#hero">Accueil</a></li>
       <li><a href="#contexte">Contexte</a></li>
       <li><a href="#missions">Missions</a></li>
       <li><a href="#projets">Projets</a></li>
       <li><a href="#bilan">Bilan</a></li>
     </ul>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#hero" onclick="closeMenu()">Accueil</a>
+    <a href="#contexte" onclick="closeMenu()">Contexte</a>
+    <a href="#missions" onclick="closeMenu()">Missions</a>
+    <a href="#projets" onclick="closeMenu()">Projets</a>
+    <a href="#bilan" onclick="closeMenu()">Bilan</a>
+  </div>
 
-  <!-- HERO -->
   <section id="hero">
-    <div class="water" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="bg-word" aria-hidden="true">FFCK</div>
-
+    <div class="hero-bg"></div>
+    <div class="hero-vignette"></div>
     <div class="hero-content">
-      <p class="eyebrow">Alternance - Marketing &amp; Communication</p>
-      <h1 class="hero-name">
-        Fany<br>
-        <span class="dim">Marck</span>
-      </h1>
-      <p class="hero-desc">
-       Alternante en communication à la<br>
-        <strong>Fédération Française de Canoë-Kayak et sport de pagaie</strong><br>
-        depuis septembre 2025 — jusqu'en septembre 2027
-      </p>
-      <div class="pills">
-        <span class="pill">Création visuelle</span>
-        <span class="pill">Motion design</span>
-        <span class="pill">Photo &amp; vidéo</span>
-        <span class="pill">Réseaux sociaux</span>
-        <span class="pill">Print</span>
-      </div>
-      <a href="#missions" class="cta">Voir mes réalisations ↓</a>
-    </div>
-
-    <!--
-      PHOTO : remplacer le contenu de .photo-frame par :
-      <img src="photo.jpg" alt="Prénom Nom">
-    -->
-    <div class="photo-frame">
-      <div class="placeholder">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-        Votre photo ici
-      </div>
-    </div>
-
-    <div class="stats-strip">
-      <div class="stat-item">
-        <span class="stat-num">700+</span>
-        <span class="stat-lbl">clubs affiliés</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">60k+</span>
-        <span class="stat-lbl">licenciés</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">12</span>
-        <span class="stat-lbl">disciplines</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">7</span>
-        <span class="stat-lbl">mois d'expérience</span>
+      <span class="hero-tag">Alternance · Marketing &amp; Communication</span>
+      <h1 class="hero-name">Prénom<br>Nom</h1>
+      <p class="hero-meta">Chargé(e) de communication à la<br><strong>Fédération Française de Canoë-Kayak</strong><br>Octobre 2024 — Septembre 2027</p>
+      <div class="hero-btns">
+        <a href="#projets" class="btn btn-white"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Voir mes projets</a>
+        <a href="#contexte" class="btn btn-dim">En savoir plus</a>
       </div>
     </div>
   </section>
 
-  <!-- CONTEXTE -->
-  <section id="contexte">
-    <div class="inner">
-      <p class="s-label">01 — Contexte</p>
-      <h2 class="s-title">La FFCK</h2>
-      <div class="context-grid">
-        <p class="context-text reveal">
-          La Fédération Française de Canoë-Kayak et sport de pagaie est l'organe national gouvernant le canoë-kayak et ses disciplines associées en France. Elle structure la pratique au travers de ses clubs affiliés, accompagne les athlètes de haut niveau, et organise les compétitions nationales et internationales — dont la Coupe du Monde 2026.
-        </p>
-        <div class="context-stats reveal">
-          <div class="c-stat">
-            <span class="c-stat-num">700+</span>
-            <span class="c-stat-lbl">clubs affiliés en France</span>
-          </div>
-          <div class="c-stat">
-            <span class="c-stat-num">60 000+</span>
-            <span class="c-stat-lbl">licenciés</span>
-          </div>
-          <div class="c-stat">
-            <span class="c-stat-num">12</span>
-            <span class="c-stat-lbl">disciplines pratiquées</span>
-          </div>
-        </div>
-      </div>
-      <div class="role-block reveal">
-        <p class="role-label">Mon rôle</p>
-        <p class="role-text">Au sein du pôle communication, je produis l'ensemble des contenus digitaux et print : visuels réseaux sociaux, montage vidéo et Reels, articles web, affiches événementielles, animations motion design et couverture photo/vidéo des compétitions.</p>
+  <div id="contexte" style="padding-top:3rem;">
+    <div class="row-section reveal"><p class="row-label">La <span>FFCK</span></p></div>
+    <div class="ctx-wrap reveal">
+      <p class="ctx-text">La Fédération Française de Canoë-Kayak est l'organe national gouvernant le canoë-kayak et ses disciplines en France. Elle structure la pratique via ses clubs affiliés, accompagne les athlètes de haut niveau et organise les compétitions nationales et internationales — dont la <strong>Coupe du Monde 2026</strong>.</p>
+      <div class="ctx-stats">
+        <div class="ctx-stat"><span class="ctx-n">700+</span><span class="ctx-l">clubs affiliés</span></div>
+        <div class="ctx-stat"><span class="ctx-n">60k+</span><span class="ctx-l">licenciés</span></div>
+        <div class="ctx-stat"><span class="ctx-n">12</span><span class="ctx-l">disciplines</span></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- MISSIONS -->
-  <section id="missions">
-    <div class="inner">
-      <p class="s-label">02 — Missions</p>
-      <h2 class="s-title">Ce que je fais</h2>
-      <div class="missions-grid">
-
-        <div class="mission-card reveal">
-          <div class="m-icon">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <h3 class="m-name">Réseaux sociaux</h3>
-          <p class="m-desc">Création de visuels et Reels pour Instagram et Facebook. Montage vidéo, animations, gestion du calendrier éditorial.</p>
-          <div class="tools">
-            <span class="tool">Premiere Pro</span>
-            <span class="tool">After Effects</span>
-            <span class="tool">Canva</span>
-          </div>
+  <div id="missions">
+    <div class="row-section reveal">
+      <p class="row-label">Mes <span>missions</span></p>
+      <div class="cards-row">
+        <div class="m-card" onclick="openModal('reseaux')">
+          <div class="m-card-thumb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="m-card-body"><p class="m-card-title">Réseaux sociaux</p><p class="m-card-desc">Visuels, Reels, animations et calendrier éditorial.</p><div class="m-card-tools"><span class="m-tag">Premiere Pro</span><span class="m-tag">After Effects</span><span class="m-tag">Canva</span></div></div>
         </div>
-
-        <div class="mission-card reveal">
-          <div class="m-icon">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
-          </div>
-          <h3 class="m-name">Print &amp; supports</h3>
-          <p class="m-desc">Conception d'affiches, dépliants et supports de communication pour les événements et compétitions.</p>
-          <div class="tools">
-            <span class="tool">Illustrator</span>
-            <span class="tool">Photoshop</span>
-          </div>
+        <div class="m-card" onclick="openModal('print')">
+          <div class="m-card-thumb"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg></div>
+          <div class="m-card-body"><p class="m-card-title">Print &amp; supports</p><p class="m-card-desc">Affiches, dépliants et supports événementiels.</p><div class="m-card-tools"><span class="m-tag">Illustrator</span><span class="m-tag">Photoshop</span></div></div>
         </div>
-
-        <div class="mission-card reveal">
-          <div class="m-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-          </div>
-          <h3 class="m-name">Motion design</h3>
-          <p class="m-desc">Animations de logos, teasers et habillages vidéo. Notamment le teaser officiel de la Coupe du Monde 2026.</p>
-          <div class="tools">
-            <span class="tool">After Effects</span>
-            <span class="tool">Illustrator</span>
-          </div>
+        <div class="m-card" onclick="openModal('motion')">
+          <div class="m-card-thumb"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+          <div class="m-card-body"><p class="m-card-title">Motion design</p><p class="m-card-desc">Animations de logos, teasers et habillages vidéo.</p><div class="m-card-tools"><span class="m-tag">After Effects</span><span class="m-tag">Illustrator</span></div></div>
         </div>
-
-        <div class="mission-card reveal">
-          <div class="m-icon">
-            <svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26A9.88 9.88 0 0 0 12 2C8.18 2 4.84 4.01 2.96 7.06l6.44 3.44zm11.49.03A9.97 9.97 0 0 0 22 12c0-3.56-1.87-6.69-4.69-8.47l-6.41 3.47 4.5 7.53zM2.07 13.86C2.64 17.43 5.2 20.35 8.6 21.5l3.4-5.86-6.53-1.78zm12.93 7.64c3.4-1.15 5.96-4.07 6.53-7.64l-6.53 1.78-6.41 3.47z"/></svg>
-          </div>
-          <h3 class="m-name">Photo &amp; vidéo terrain</h3>
-          <p class="m-desc">Couverture photo et vidéo des événements et compétitions. Sélection, retouche et diffusion sur les canaux officiels.</p>
-          <div class="tools">
-            <span class="tool">Photoshop</span>
-            <span class="tool">Premiere Pro</span>
-          </div>
+        <div class="m-card" onclick="openModal('photo')">
+          <div class="m-card-thumb"><svg viewBox="0 0 24 24"><path d="M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
+          <div class="m-card-body"><p class="m-card-title">Photo &amp; vidéo terrain</p><p class="m-card-desc">Couverture des événements et compétitions.</p><div class="m-card-tools"><span class="m-tag">Photoshop</span><span class="m-tag">Premiere Pro</span></div></div>
         </div>
-
-        <div class="mission-card reveal">
-          <div class="m-icon">
-            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-          </div>
-          <h3 class="m-name">Web &amp; rédaction</h3>
-          <p class="m-desc">Rédaction et mise en ligne d'articles sur le site officiel de la fédération. Mise en page et intégration des visuels.</p>
-          <div class="tools">
-            <span class="tool">CMS</span>
-            <span class="tool">Canva</span>
-          </div>
+        <div class="m-card" onclick="openModal('web')">
+          <div class="m-card-thumb"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+          <div class="m-card-body"><p class="m-card-title">Web &amp; rédaction</p><p class="m-card-desc">Articles et mise en page sur le site officiel.</p><div class="m-card-tools"><span class="m-tag">CMS</span><span class="m-tag">Canva</span></div></div>
         </div>
-
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- PROJETS -->
-  <section id="projets">
-    <div class="inner">
-      <p class="s-label">03 — Projets</p>
-      <h2 class="s-title">Réalisations</h2>
-
-      <div class="project-featured reveal">
-        <p class="pf-badge">Projet phare</p>
-        <h3 class="pf-title">Teaser Coupe du Monde 2026</h3>
-        <p class="pf-desc">
-          Conception et réalisation du teaser officiel de la Coupe du Monde de Canoë-Kayak 2026.
-          Direction artistique, animation motion design et montage final — du brief à l'export.
-        </p>
-        <!--
-          VIDÉO : remplacer le contenu de .pf-media par :
-          <video src="teaser.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video>
-          ou une image : <img src="teaser-capture.jpg" alt="Teaser CdM 2026">
-        -->
-        <div class="pf-media">Insérer la vidéo ou une capture ici</div>
-        <div class="process">
-          <div class="p-step"><span class="p-num">1</span> Brief &amp; direction artistique</div>
-          <span class="p-arrow">→</span>
-          <div class="p-step"><span class="p-num">2</span> Storyboard &amp; assets</div>
-          <span class="p-arrow">→</span>
-          <div class="p-step"><span class="p-num">3</span> Animation After Effects</div>
-          <span class="p-arrow">→</span>
-          <div class="p-step"><span class="p-num">4</span> Montage &amp; export</div>
-        </div>
-      </div>
-
-      <div class="projects-grid">
-
-        <div class="project-card reveal">
-          <!--
-            IMAGE : remplacer .pc-img par :
-            <img src="projet1.jpg" alt="Description">
-          -->
-          <div class="pc-img">Visuel à insérer</div>
-          <div class="pc-body">
-            <p class="pc-cat">Réseaux sociaux</p>
-            <h4 class="pc-name">À compléter</h4>
-            <p class="pc-detail">Description du projet à ajouter.</p>
+  <div id="projets">
+    <div class="row-section reveal"><p class="row-label">Projet <span>phare</span></p></div>
+    <div class="featured-wrap reveal">
+      <div class="feat-card">
+        <div class="feat-placeholder"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Insérer une image ou vidéo de fond</div>
+        <div class="feat-overlay"></div>
+        <div class="feat-content">
+          <p class="feat-badge">Teaser officiel · Motion design</p>
+          <h2 class="feat-title">Coupe du Monde 2026</h2>
+          <p class="feat-desc">Direction artistique, animation After Effects et montage final — du brief à l'export.</p>
+          <div class="feat-steps">
+            <div class="feat-step"><span class="step-n">1</span>Brief &amp; DA</div>
+            <div class="feat-step"><span class="step-n">2</span>Storyboard</div>
+            <div class="feat-step"><span class="step-n">3</span>Animation AE</div>
+            <div class="feat-step"><span class="step-n">4</span>Export</div>
           </div>
         </div>
-
-        <div class="project-card reveal">
-          <div class="pc-img">Visuel à insérer</div>
-          <div class="pc-body">
-            <p class="pc-cat">Print</p>
-            <h4 class="pc-name">À compléter</h4>
-            <p class="pc-detail">Description du projet à ajouter.</p>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="pc-img">Visuel à insérer</div>
-          <div class="pc-body">
-            <p class="pc-cat">Photo terrain</p>
-            <h4 class="pc-name">À compléter</h4>
-            <p class="pc-detail">Description du projet à ajouter.</p>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
-
-  <!-- BILAN -->
-  <section id="bilan">
-    <div class="inner">
-      <p class="s-label">04 — Bilan</p>
-      <h2 class="s-title">Ce que j'ai appris</h2>
-      <div class="skills-grid">
-        <div class="skill-block reveal">
-          <p class="sk-type">Compétences techniques</p>
-          <ul class="sk-list">
-            <li>Maîtrise avancée d'After Effects et Premiere Pro</li>
-            <li>Création de chartes graphiques cohérentes</li>
-            <li>Production de contenus adaptés à chaque réseau social</li>
-            <li>Gestion de plusieurs projets en parallèle</li>
-          </ul>
-        </div>
-        <div class="skill-block reveal">
-          <p class="sk-type">Soft skills</p>
-          <ul class="sk-list">
-            <li>Autonomie et organisation dans un environnement professionnel</li>
-            <li>Communication avec les équipes internes</li>
-            <li>Adaptation aux délais et contraintes événementielles</li>
-            <li>Prise d'initiative sur des projets transversaux</li>
-          </ul>
-        </div>
-      </div>
-      <div class="outlook reveal">
-        <p class="outlook-label">Perspectives</p>
-        <p class="outlook-text">À compléter — ce que vous souhaitez développer d'ici septembre 2027 et vos ambitions professionnelles après l'alternance.</p>
+    <div class="row-section reveal">
+      <p class="row-label">Autres <span>réalisations</span></p>
+      <div class="cards-row">
+        <div class="p-card"><div class="p-card-img">Visuel à insérer</div><div class="p-card-body"><p class="p-card-cat">Réseaux sociaux</p><p class="p-card-name">À compléter</p><p class="p-card-desc">Description à ajouter.</p></div></div>
+        <div class="p-card"><div class="p-card-img">Visuel à insérer</div><div class="p-card-body"><p class="p-card-cat">Print</p><p class="p-card-name">À compléter</p><p class="p-card-desc">Description à ajouter.</p></div></div>
+        <div class="p-card"><div class="p-card-img">Visuel à insérer</div><div class="p-card-body"><p class="p-card-cat">Photo terrain</p><p class="p-card-name">À compléter</p><p class="p-card-desc">Description à ajouter.</p></div></div>
+        <div class="p-card"><div class="p-card-img">Visuel à insérer</div><div class="p-card-body"><p class="p-card-cat">Motion design</p><p class="p-card-name">À compléter</p><p class="p-card-desc">Description à ajouter.</p></div></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Portfolio · Alternance FFCK · 2024–2027</p>
-  </footer>
+  <div id="bilan">
+    <div class="row-section reveal"><p class="row-label">Ce que j'ai <span>appris</span></p></div>
+    <div class="bilan-wrap reveal">
+      <div class="bilan-card"><p class="bilan-type">Compétences techniques</p><ul class="bilan-list"><li>Maîtrise avancée d'After Effects et Premiere Pro</li><li>Création de chartes graphiques cohérentes</li><li>Production de contenus adaptés à chaque réseau</li><li>Gestion de plusieurs projets simultanément</li></ul></div>
+      <div class="bilan-card"><p class="bilan-type">Soft skills</p><ul class="bilan-list"><li>Autonomie dans un environnement professionnel</li><li>Communication avec les équipes internes</li><li>Adaptation aux délais et contraintes événementielles</li><li>Prise d'initiative sur des projets transversaux</li></ul></div>
+    </div>
+    <div class="persp-wrap reveal"><div class="persp-inner"><p class="persp-label">Perspectives</p><p class="persp-text">À compléter — ce que vous souhaitez développer d'ici septembre 2027 et vos ambitions après l'alternance.</p></div></div>
+  </div>
+
+  <footer>Portfolio · Alternance FFCK · 2024–2027</footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+      <div class="modal-header" id="modal-header">
+        <svg viewBox="0 0 24 24" id="modal-icon"><path d="M8 5v14l11-7z"/></svg>
+        <div class="modal-header-overlay"></div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-badge" id="modal-badge"></p>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <p class="modal-desc"  id="modal-desc"></p>
+        <div class="modal-tools" id="modal-tools"></div>
+        <div class="modal-actions">
+          <a href="#" class="modal-btn-main" id="modal-link">
+            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            Voir toutes les réalisations
+          </a>
+          <button class="modal-btn-ghost" onclick="closeModal()">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
+    const missions = {
+      reseaux: { badge:'Mission 01', title:'Réseaux sociaux', desc:"Création quotidienne de visuels pour Instagram et Facebook, montage de Reels et gestion du calendrier éditorial. Chaque contenu est pensé pour coller à l'identité visuelle de la FFCK tout en maximisant l'engagement.", tools:['Premiere Pro','After Effects','Canva','Instagram','Facebook'], page:'missions/reseaux-sociaux.html' },
+      print:   { badge:'Mission 02', title:'Print & supports', desc:"Conception d'affiches, dépliants, programmes et supports de communication imprimés pour les compétitions et événements nationaux. Du brief au fichier print-ready.", tools:['Illustrator','Photoshop'], page:'missions/print.html' },
+      motion:  { badge:'Mission 03', title:'Motion design', desc:"Animations de logos, teasers événementiels, habillages vidéo et génériques. Notamment la réalisation du teaser officiel de la Coupe du Monde de Canoë-Kayak 2026.", tools:['After Effects','Illustrator','Premiere Pro'], page:'missions/motion-design.html' },
+      photo:   { badge:'Mission 04', title:'Photo & vidéo terrain', desc:"Couverture photo et vidéo des événements sportifs, compétitions et temps forts de la fédération. Sélection, retouche et diffusion sur les canaux officiels.", tools:['Photoshop','Premiere Pro'], page:'missions/photo-video.html' },
+      web:     { badge:'Mission 05', title:'Web & rédaction', desc:"Rédaction et publication d'articles sur le site officiel de la FFCK. Mise en page éditoriale, intégration des visuels et optimisation pour la lecture web.", tools:['CMS','Canva'], page:'missions/web-redaction.html' }
+    };
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    function openModal(key) {
+      const m = missions[key];
+      document.getElementById('modal-badge').textContent = m.badge;
+      document.getElementById('modal-title').textContent = m.title;
+      document.getElementById('modal-desc').textContent  = m.desc;
+      document.getElementById('modal-tools').innerHTML   = m.tools.map(t=>`<span class="modal-tool">${t}</span>`).join('');
+      document.getElementById('modal-link').href         = m.page;
+      document.getElementById('modal-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) { if (e.target.id === 'modal-overlay') closeModal(); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Nav active link
-    const sections = document.querySelectorAll('section[id]');
-    const links = document.querySelectorAll('.nav-links a');
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
 
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 140) current = s.id;
-      });
-      links.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
-      });
-    }, { passive: true });
+    const burger = document.getElementById('burger');
+    const menu   = document.getElementById('mobile-menu');
+    burger.addEventListener('click', () => menu.classList.toggle('open'));
+    function closeMenu() { menu.classList.remove('open'); }
+    document.addEventListener('click', e => { if (!burger.contains(e.target) && !menu.contains(e.target)) closeMenu(); });
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
-
 </body>
 </html>
