@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Motion design — FFCK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #141414; color: #e5e5e5; font-family: 'Barlow', sans-serif; font-weight: 400; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 68px; display: flex; align-items: center; padding: 0 4%; gap: 1.5rem; background: rgba(20,20,20,.97); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .12em; color: #3B8BFF; flex-shrink: 0; }
+    .nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(229,229,229,.5); transition: color .15s; margin-right: auto; }
+    .nav-back:hover { color: #e5e5e5; }
+    .nav-back svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* HERO */
+    .mission-hero { padding: 120px 4% 60px; position: relative; }
+    .mission-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(255,255,255,.06); }
+    .mission-badge { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #3B8BFF; margin-bottom: .8rem; display: flex; align-items: center; gap: 8px; }
+    .mission-badge::before { content: ''; display: block; width: 20px; height: 1px; background: #3B8BFF; }
+    .mission-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 90px); letter-spacing: .02em; line-height: .95; color: #fff; margin-bottom: 1.2rem; max-width: 800px; }
+    .mission-intro { font-size: clamp(16px, 2vw, 20px); font-weight: 300; color: rgba(229,229,229,.6); line-height: 1.7; max-width: 640px; margin-bottom: 2rem; }
+    .tools-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tool-pill { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 3px; background: rgba(59,139,255,.12); color: #3B8BFF; border: 1px solid rgba(59,139,255,.25); }
+
+    /* DESCRIPTION */
+    .desc-section { padding: 4rem 4%; border-top: 1px solid rgba(255,255,255,.06); }
+    .desc-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .desc-block-title { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #3B8BFF; margin-bottom: 1rem; }
+    .desc-text { font-size: 16px; font-weight: 300; color: rgba(229,229,229,.7); line-height: 1.85; }
+    .desc-list { display: flex; flex-direction: column; gap: .7rem; }
+    .desc-list li { font-size: 15px; font-weight: 300; color: rgba(229,229,229,.7); padding-left: 1.1rem; position: relative; line-height: 1.55; }
+    .desc-list li::before { content: ''; position: absolute; left: 0; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: #3B8BFF; }
+
+    /* GALLERY */
+    .gallery-section { padding: 4rem 4%; border-top: 1px solid rgba(255,255,255,.06); }
+    .gallery-title { font-size: 18px; font-weight: 600; color: #e5e5e5; margin-bottom: 1.5rem; }
+    .gallery-title span { color: #3B8BFF; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+
+    /* MEDIA CARD */
+    .media-card { background: #1f1f1f; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,.06); transition: border-color .2s, transform .2s; }
+    .media-card:hover { border-color: rgba(59,139,255,.3); transform: translateY(-3px); }
+    .media-thumb {
+      width: 100%; height: 200px;
+      background: #2a2a2a;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .media-thumb img, .media-thumb video { width: 100%; height: 100%; object-fit: cover; }
+    .media-thumb .placeholder-icon { width: 40px; height: 40px; fill: rgba(59,139,255,.3); }
+    .media-type-badge { position: absolute; top: 8px; left: 8px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 3px; background: rgba(0,0,0,.7); color: #3B8BFF; letter-spacing: .06em; text-transform: uppercase; }
+    .media-body { padding: 12px 14px 16px; }
+    .media-name { font-size: 14px; font-weight: 600; color: #e5e5e5; margin-bottom: 4px; }
+    .media-desc { font-size: 12px; font-weight: 300; color: rgba(229,229,229,.5); line-height: 1.5; margin-bottom: 10px; }
+    .media-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .media-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #3B8BFF; border: 1px solid rgba(59,139,255,.3); padding: 4px 10px; border-radius: 3px; transition: background .15s; }
+    .media-link:hover { background: rgba(59,139,255,.15); }
+    .media-link svg { width: 11px; height: 11px; fill: currentColor; }
+
+    /* ADD CARD */
+    .media-card.add-card { border: 1.5px dashed rgba(255,255,255,.12); cursor: default; display: flex; align-items: center; justify-content: center; min-height: 280px; }
+    .add-card-inner { text-align: center; color: rgba(229,229,229,.2); }
+    .add-card-inner svg { width: 32px; height: 32px; fill: currentColor; margin: 0 auto 8px; }
+    .add-card-inner p { font-size: 12px; line-height: 1.5; }
+    .add-card-inner code { font-size: 11px; color: rgba(59,139,255,.5); background: rgba(59,139,255,.08); padding: 2px 6px; border-radius: 3px; }
+
+    /* LIENS EXTERNES */
+    .links-section { padding: 3rem 4% 5rem; border-top: 1px solid rgba(255,255,255,.06); }
+    .ext-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1rem; }
+    .ext-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #e5e5e5; background: #1f1f1f; border: 1px solid rgba(255,255,255,.1); padding: 10px 20px; border-radius: 6px; transition: border-color .2s, background .2s; }
+    .ext-link:hover { border-color: #3B8BFF; background: rgba(59,139,255,.08); }
+    .ext-link svg { width: 16px; height: 16px; fill: #3B8BFF; }
+
+    footer { padding: 2rem 4%; border-top: 1px solid rgba(255,255,255,.06); font-size: 13px; color: rgba(229,229,229,.3); display: flex; justify-content: space-between; align-items: center; }
+    footer a { color: #3B8BFF; transition: opacity .15s; }
+    footer a:hover { opacity: .7; }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 700px) {
+      .mission-hero { padding: 100px 5% 40px; }
+      .desc-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .gallery-section, .desc-section, .links-section { padding-left: 5%; padding-right: 5%; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 440px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav-logo">FFCK</span>
+    <a href="../index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Retour au portfolio
+    </a>
+  </nav>
+
+  <!-- HERO MISSION -->
+  <div class="mission-hero">
+    <p class="mission-badge">Mission 03 · Motion Design</p>
+    <h1 class="mission-title">Motion design</h1>
+    <p class="mission-intro">Conception et réalisation d'animations graphiques : animations de logos, teasers événementiels, habillages vidéo et génériques pour les contenus officiels de la FFCK.</p>
+    <div class="tools-row"><span class="tool-pill">After Effects</span><span class="tool-pill">Illustrator</span><span class="tool-pill">Premiere Pro</span></div>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="desc-section reveal">
+    <div class="desc-inner">
+      <div>
+        <p class="desc-block-title">La mission</p>
+        <p class="desc-text">Le motion design est au cœur de ma contribution à la FFCK. Je crée des animations qui donnent vie à l'identité visuelle de la fédération : logo animé, transitions, teasers d'événements. Le projet phare est la réalisation du teaser officiel de la Coupe du Monde de Canoë-Kayak 2026, de la direction artistique à l'export final.</p>
+      </div>
+      <div>
+        <p class="desc-block-title">Ce que j'ai développé</p>
+        <ul class="desc-list"><li>Animer des éléments graphiques sous After Effects</li><li>Créer des teasers avec une direction artistique forte</li><li>Gérer les compositions complexes et les exports vidéo</li><li>Synchroniser animation et musique / son</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-section reveal">
+    <p class="gallery-title">Mes <span>réalisations</span></p>
+    <div class="gallery-grid" id="gallery">
+
+      <!-- ════════════════════════════════════════════
+           COMMENT AJOUTER UN PROJET :
+
+           1. IMAGE :
+           <div class="media-card">
+             <div class="media-thumb">
+               <img src="../images/nom-fichier.jpg" alt="Description">
+               <span class="media-type-badge">Image</span>
+             </div>
+             <div class="media-body">
+               <p class="media-name">Nom du projet</p>
+               <p class="media-desc">Description courte du projet.</p>
+               <div class="media-links">
+                 <a href="https://instagram.com/..." target="_blank" class="media-link">
+                   <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                   Voir sur Instagram
+                 </a>
+               </div>
+             </div>
+           </div>
+
+           2. VIDÉO :
+           <div class="media-card">
+             <div class="media-thumb">
+               <video src="../videos/nom-fichier.mp4" controls poster="../images/poster.jpg"></video>
+               <span class="media-type-badge">Vidéo</span>
+             </div>
+             <div class="media-body">
+               <p class="media-name">Nom du projet</p>
+               <p class="media-desc">Description courte.</p>
+             </div>
+           </div>
+
+           3. LIEN EXTERNE SEULEMENT :
+           <div class="media-card">
+             <div class="media-thumb">
+               <img src="../images/capture.jpg" alt="Capture">
+               <span class="media-type-badge">Web</span>
+             </div>
+             <div class="media-body">
+               <p class="media-name">Article FFCK</p>
+               <p class="media-desc">Article publié sur le site officiel.</p>
+               <div class="media-links">
+                 <a href="https://ffck.org/..." target="_blank" class="media-link">
+                   <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                   Voir en ligne
+                 </a>
+               </div>
+             </div>
+           </div>
+      ════════════════════════════════════════════ -->
+
+      <!-- Carte placeholder — supprimer quand tu as tes vraies réalisations -->
+      <div class="media-card add-card">
+        <div class="add-card-inner">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          <p>Ajoute tes réalisations<br>en suivant le guide ci-dessus<br><code><!-- commentaires dans le HTML --></code></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIENS EXTERNES -->
+  <div class="links-section reveal">
+    <p class="gallery-title">Liens <span>utiles</span></p>
+    <div class="ext-links">
+      <a href="https://www.instagram.com/ffcanoekayak/" target="_blank" class="ext-link">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        Instagram FFCK
+      </a>
+      <a href="https://www.ffck.org" target="_blank" class="ext-link">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        Site FFCK
+      </a>
+      <!-- Ajoute d'autres liens ici -->
+    </div>
+  </div>
+
+  <footer>
+    <span>Portfolio · Alternance FFCK · 2024–2027</span>
+    <a href="../index.html">← Retour à l'accueil</a>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
